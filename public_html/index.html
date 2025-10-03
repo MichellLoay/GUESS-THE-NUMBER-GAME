@@ -53,12 +53,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
         <script>
             function creaGioco(maxNum, tentativiMax) {
-                const numeroDaIndovinare = Math.floor(Math.random() * maxNum) + 1;
-                let tentativiEffettuati = 0;
+                const numeroDaIndovinare = Math.floor(Math.random() * maxNum) + 1;//genera un numero casuale intero tra 1 e maxNumero (incluso)
+                let tentativiEffettuati = 0;//mantiene uno stato interno che conta il numero di tentativi effettuati;
 
                 return (numeroUtente) => {
-                    tentativiEffettuati++;
-
+                    tentativiEffettuati++;//incrememnta il contatore dei tentativi
+                    
+                    //restituire un messaggio che indichi se il numero inserito è troppo alto, troppo basso o corretto;
                     if (tentativiEffettuati > tentativiMax) {
                         return `Game Over! Tentativi esauriti, il numero era ${numeroDaIndovinare}`;
                     }
@@ -89,7 +90,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 
                 let giocoAttivo = true;
 
-                while (giocoAttivo) {
+                while (giocoAttivo) {// ciclo di gioco
                     const tentativo = prompt(`Inserisci un numero tra 1 e ${maxNum}:`);
                     
                     if (tentativo === null) {
@@ -98,7 +99,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     }
                     
                     const numeroUtente = parseInt(tentativo);
-                    
+                    /*
+                     Validazione del numero inserito con isNaN
+                     parseInt("50")      // 50 ✅
+                     parseInt("ciao")    // NaN ❌
+                     parseInt("")        // NaN ❌
+                     parseInt("12abc")   // 12 (prende solo la parte numerica)
+                     parseInt("abc12")   // NaN ❌
+                     parseInt("  50  ")  // 50 (ignora spazi) 
+                     */
                     if (isNaN(numeroUtente) || numeroUtente < 1 || numeroUtente > maxNum) {
                         alert(`Inserisci un numero valido tra 1 e ${maxNum}!`);
                         continue;
@@ -113,6 +122,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 }
             }
         </script>
+         <!-- per fare -> ` su mac premere y due tasti OPTION contemporaneamente   +   il numero 9 -->
     </head>
 
     <body>
