@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html>
+    <head>
+        <title>indovina il numero</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+            }
+            .container {
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+            h1 {
+                color: #667eea;
+                text-align: center;
+            }
+            button {
+                width: 100%;
+                padding: 15px;
+                font-size: 18px;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            button:hover {
+                background: #5568d3;
+            }
+            .info {
+                background: #f0f4ff;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 20px 0;
+                border-left: 4px solid #667eea;
+            }
+        </style>
+
+        <script>
+            function creaGioco(maxNum, tentativiMax) {
+                const numeroDaIndovinare = Math.floor(Math.random() * maxNum) + 1;
+                let tentativiEffettuati = 0;
+
+                return (numeroUtente) => {
+                    tentativiEffettuati++;
+
+                    if (tentativiEffettuati > tentativiMax) {
+                        return `Game Over! Tentativi esauriti, il numero era ${numeroDaIndovinare}`;
+                    }
+
+                    if (numeroUtente === numeroDaIndovinare) {
+                        return `Complimenti, HAI VINTO!! 🎉🎉🎉🎉 Hai indovinato il numero ${numeroDaIndovinare} in ${tentativiEffettuati} tentativi`;
+                    }
+
+                    if (numeroUtente < numeroDaIndovinare) {
+                        return `❌ Il numero è troppo BASSO. Riprova! (Tentativo ${tentativiEffettuati}/${tentativiMax})`;
+                    } else {
+                        return `❌ Il numero è troppo ALTO. Riprova! (Tentativo ${tentativiEffettuati}/${tentativiMax})`;
+                    }
+                }
+            }
+
+            function start() {
+                const maxNum = parseInt(prompt("Inserisci il numero massimo del range:"));
+                const tentativiMax = parseInt(prompt("Inserisci il numero massimo di tentativi:"));
+                
+                if (isNaN(maxNum) || maxNum < 1 || isNaN(tentativiMax) || tentativiMax < 1) {
+                    alert("Valori non validi! Inserisci numeri positivi.");
+                    return;
+                }
+                
+                const gioca = creaGioco(maxNum, tentativiMax);
+                alert(`Indovina il numero tra 1 e ${maxNum}. Hai ${tentativiMax} tentativi.`);
+                
+                let giocoAttivo = true;
+
+                while (giocoAttivo) {
+                    const tentativo = prompt(`Inserisci un numero tra 1 e ${maxNum}:`);
+                    
+                    if (tentativo === null) {
+                        alert("Gioco annullato.");
+                        break;
+                    }
+                    
+                    const numeroUtente = parseInt(tentativo);
+                    
+                    if (isNaN(numeroUtente) || numeroUtente < 1 || numeroUtente > maxNum) {
+                        alert(`Inserisci un numero valido tra 1 e ${maxNum}!`);
+                        continue;
+                    }
+
+                    const risultato = gioca(numeroUtente);
+                    alert(risultato);
+                    
+                    if (risultato.includes("Complimenti") || risultato.includes("Game Over")) {
+                        giocoAttivo = false;
+                    }
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>INDOVINA IL NUMERO</h1>
+            <div class="info"> 
+                <p>1. Clicca sul pulsante per iniziare</p>
+                <p>2. Imposta il numero massimo e i tentativi</p>
+                <p>3. Prova a indovinare il numero!</p>
+            </div>
+            <button onclick="start()">INIZIA GIOCO</button>
+        </div>
+    </body>
+</html>
+
